@@ -197,7 +197,6 @@ runs:
       working-directory: ${{ inputs.app-working-directory }}
       run: |
         upx --version
-        ls -alh  build/bin/*
         upx build/bin/${{inputs.build-name}}
       
       
@@ -284,8 +283,7 @@ runs:
           
     - name: Release
       uses: softprops/action-gh-release@v1
-      # if: inputs.package == 'true' && startsWith(github.ref, 'refs/tags/')
-      if: inputs.package == 'true' 
+      if: inputs.package == 'true' && startsWith(github.ref, 'refs/tags/')
       with:
         files: |
           gui/build/bin/*
