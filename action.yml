@@ -142,8 +142,17 @@ runs:
     #   if: runner.os == 'macOS'
     #   run: brew install mitchellh/gon/gon
     #   shell: bash
+
+    # Build frontend
+    - name: Build frontend
+      if: inputs.build == 'true'
+      working-directory: ${{ inputs.app-working-directory }}/frontend
+      run: |
+        npm install
+        npm run build
+      shell: bash
       
-    # Building step
+    # Building App step
     - name: Build App
       if: inputs.build == 'true' && runner.os == 'macOS'
       working-directory: ${{ inputs.app-working-directory }}
