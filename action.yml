@@ -257,7 +257,9 @@ runs:
       if: inputs.package == 'true'
       with:
         name: Wails Build ${{runner.os}} ${{inputs.build-name}}
-        path: gui/build/bin/*
+        path: |
+          gui/build/bin/*
+          !gui/bin/*
           
     - name: Release
       uses: softprops/action-gh-release@v1
