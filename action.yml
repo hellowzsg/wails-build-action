@@ -159,9 +159,9 @@ runs:
         GOOS: windows
         GOARCH: amd64
       working-directory: ${{ inputs.app-working-directory }}
-      run: 
-        - go mod tidy
-        - go build -trimpath -tags desktop,production,wv2runtime.${{inputs.wails-build-webview2}} -ldflags "-w -s -H windowsgui" -o ${{inputs.build-name}}
+      run: |
+        go mod tidy
+        go build -trimpath -tags desktop,production,wv2runtime.${{inputs.wails-build-webview2}} -ldflags "-w -s -H windowsgui" -o ${{inputs.build-name}}
       shell: bash
       
     - name: Build Windows App + Installer
