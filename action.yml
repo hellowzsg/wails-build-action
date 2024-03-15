@@ -42,7 +42,7 @@ inputs:
   node-version:
     description: "Node js version"
     required: false
-    default: "16.x"
+    default: "18"
   deno-build:
     description: "This gets run into bash, use the full command"
     required: false
@@ -115,7 +115,7 @@ runs:
       shell: bash
     # Setup and configure NodeJS
     - name: Setup NodeJS
-      uses: actions/setup-node@v3
+      uses: actions/setup-node@v4
       with:
         node-version: ${{inputs.node-version}}
     # (Optional) Setup and configure Deno
