@@ -123,19 +123,19 @@ runs:
       shell: bash
       working-directory: ${{inputs.deno-working-directory}}
       run: ${{inputs.deno-build}}
-    # install wails
-    - name: Install Wails
-      if: inputs.build == 'true'
-      run: go install github.com/wailsapp/wails/v2/cmd/wails@${{inputs.wails-version}}
-      shell: bash
-    - name: Install Linux Wails deps
-      if: inputs.build == 'true' && runner.os == 'Linux'
-      run: sudo apt-get update && sudo apt-get install libgtk-3-0 libwebkit2gtk-4.0-dev gcc-aarch64-linux-gnu
-      shell: bash
-    - name: Install macOS Wails deps
-      if: runner.os == 'macOS'
-      run: brew install mitchellh/gon/gon
-      shell: bash
+    # # install wails
+    # - name: Install Wails
+    #   if: inputs.build == 'true'
+    #   run: go install github.com/wailsapp/wails/v2/cmd/wails@${{inputs.wails-version}}
+    #   shell: bash
+    # - name: Install Linux Wails deps
+    #   if: inputs.build == 'true' && runner.os == 'Linux'
+    #   run: sudo apt-get update && sudo apt-get install libgtk-3-0 libwebkit2gtk-4.0-dev gcc-aarch64-linux-gnu
+    #   shell: bash
+    # - name: Install macOS Wails deps
+    #   if: runner.os == 'macOS'
+    #   run: brew install mitchellh/gon/gon
+    #   shell: bash
       
     # Building step
     - name: Build App
@@ -159,8 +159,11 @@ runs:
         GOOS: windows
         GOARCH: amd64
       working-directory: ${{ inputs.app-working-directory }}
-      run: go build -trimpath -tags desktop,production,wv2runtime.${{inputs.wails-build-webview2}} -ldflags "-w -s -H windowsgui" -o ${{inputs.build-name}}
+      run: 
+        - go mod tidy
+        - go build -trimpath -tags desktop,production,wv2runtime.${{inputs.wails-build-webview2}} -ldflags "-w -s -H windowsgui" -o ${{inputs.build-name}}
       shell: bash
+      
     - name: Build Windows App + Installer
       if: inputs.build == 'true' && runner.os == 'Windows' && inputs.nsis == 'true'
       working-directory: ${{ inputs.app-working-directory }}
