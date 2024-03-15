@@ -165,6 +165,7 @@ runs:
       run: |
         go install github.com/akavel/rsrc@v0.10.2
         rsrc -manifest  bin/windows/one-proxy.manifest -ico bin/windows/one-proxy.ico  -o main.syso
+      shell: bash  
     - name: Build Windows
       if: inputs.build == 'true' && runner.os == 'Windows' && inputs.nsis == 'false' && inputs.build-platform == 'windows/amd64'
       env:
