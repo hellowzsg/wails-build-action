@@ -194,7 +194,7 @@ runs:
     - name: Run UPX Command
       if: inputs.upx == 'true' && inputs.build == 'true' && runner.os == 'Windows'
       shell: bash
-      working-directory: ${{inputs.deno-working-directory}}
+      working-directory: ${{ inputs.app-working-directory }}
       run: |
         upx --version
         upx build/bin/${{inputs.build-name}}
